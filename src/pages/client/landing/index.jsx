@@ -1,9 +1,9 @@
-import Projects from "pages/project/projects/index";
+import Clients from "pages/client/clients/index";
 
 function Landing() {
   return (
     <>
-      <Projects />
+      <Clients />
     </>
   );
 }
