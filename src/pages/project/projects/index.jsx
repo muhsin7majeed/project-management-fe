@@ -9,6 +9,7 @@ import {
   useColorModeValue,
   Heading,
 } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
 
 const PROJECTS = [
   {
@@ -57,7 +58,9 @@ function Projects() {
                 </Box>
 
                 <Box my={"auto"} color={useColorModeValue("gray.800", "gray.200")} alignContent={"center"}>
-                  <Button>View</Button>
+                  <Link to={`/project/${project.id}`}>
+                    <Button>View</Button>
+                  </Link>
                 </Box>
               </Flex>
             </Stat>
