@@ -3,8 +3,10 @@ import { Box, Center, Heading, SimpleGrid } from "@chakra-ui/react";
 
 import DefaultSpinner from "components/loaders/DefaultSpinner";
 import SomethingWentWrong from "components/SomethingWentWrong";
+
 import { GET_PROJECTS } from "../queries";
 import ProjectItem from "../item/item";
+import ProjectContainer from "./create";
 
 function Projects() {
   const { data, loading, error, refetch } = useQuery(GET_PROJECTS);
@@ -12,9 +14,13 @@ function Projects() {
   return (
     <>
       <Box pt={5}>
-        <Heading fontSize={"4xl"} py={10} fontWeight={"bold"}>
-          Projects
-        </Heading>
+        <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
+          <Heading fontSize={"4xl"} py={10} fontWeight={"bold"}>
+            Projects
+          </Heading>
+
+          <ProjectContainer />
+        </Box>
 
         {loading && <DefaultSpinner />}
 
