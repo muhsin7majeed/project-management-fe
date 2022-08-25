@@ -26,3 +26,20 @@ export const GET_PROJECT_DETAILS = gql`
     }
   }
 `;
+
+export const CREATE_PROJECT = gql`
+  mutation createProject($client: String!, $name: String!, $status: String!, $description: String) {
+    createProject(clientId: $client, name: $name, status: $status, description: $description) {
+      id
+      clientId
+      name
+      status
+      description
+      client {
+        id
+        name
+        email
+      }
+    }
+  }
+`;
