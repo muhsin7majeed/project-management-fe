@@ -19,7 +19,7 @@ import DefaultSpinner from "components/loaders/DefaultSpinner";
 import NotFound from "components/NotFound";
 import SomethingWentWrong from "components/SomethingWentWrong";
 import ClientInfo from "./ClientInfo";
-import { GET_PROJECT_DETAILS } from "pages/project/queries";
+import { GET_PROJECT_DETAILS } from "apollo/queries/project";
 
 import placeholder_image from "assets/images/placeholder_image.jpg";
 
