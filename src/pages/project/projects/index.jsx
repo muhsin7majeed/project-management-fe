@@ -4,12 +4,16 @@ import { Box, Center, Heading, SimpleGrid } from "@chakra-ui/react";
 import DefaultSpinner from "components/loaders/DefaultSpinner";
 import SomethingWentWrong from "components/SomethingWentWrong";
 
-import { GET_PROJECTS } from "../queries";
+import ProjectCreateContainer from "./create";
 import ProjectItem from "../item/item";
-import ProjectContainer from "./create";
+import { GET_PROJECTS } from "apollo/queries/project";
 
 function Projects() {
   const { data, loading, error, refetch } = useQuery(GET_PROJECTS);
+
+  function onProjectCreation() {
+    refetch();
+  }
 
   return (
     <>
@@ -19,7 +23,7 @@ function Projects() {
             Projects
           </Heading>
 
-          <ProjectContainer />
+          <ProjectCreateContainer onProjectCreation={onProjectCreation} />
         </Box>
 
         {loading && <DefaultSpinner />}
@@ -28,7 +32,7 @@ function Projects() {
 
         {!data?.projects?.length && <Center>No Projects Found</Center>}
 
-        {data?.projects?.length && (
+        {Boolean(data?.projects?.length) && (
           <SimpleGrid columns={{ base: 1, md: 3 }} spacing={{ base: 5, lg: 8 }}>
             {data.projects.map((project) => (
               <ProjectItem key={project.id} project={project} />
