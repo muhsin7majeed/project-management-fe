@@ -1,30 +1,13 @@
 import { Formik, Field } from "formik";
-import * as YUP from "yup";
+import PropTypes from "prop-types";
 import { Box, Button, FormControl, FormLabel, Input, Text, Textarea } from "@chakra-ui/react";
 
 import FieldErrorMessage from "components/FieldErrorMessage";
-import SelectStatus from "./SelectStatus";
-import SelectClient from "./SelectClient";
+import { PROJECT_SCHEMA } from "./projectForm.yup";
+import SelectStatus from "../create/SelectStatus";
+import SelectClient from "../create/SelectClient";
 
-const PROJECT_SCHEMA = YUP.object().shape({
-  name: YUP.string().required("Name is required"),
-  client: YUP.string().required("Owner is required"),
-  status: YUP.string().required("Status is required"),
-  description: YUP.string(),
-});
-
-function ProjectForm() {
-  function handleSubmit(values) {
-    console.log(values);
-  }
-
-  const initialValues = {
-    name: "",
-    client: "",
-    status: "Pending",
-    description: "",
-  };
-
+function ProjectForm({ initialValues, handleSubmit, loading }) {
   return (
     <Box>
       <Formik onSubmit={handleSubmit} initialValues={initialValues} validationSchema={PROJECT_SCHEMA}>
@@ -57,7 +40,7 @@ function ProjectForm() {
                 <Field as={Textarea} name="description" />
               </FormControl>
 
-              <Button width={"100%"} mt={3} type="submit">
+              <Button width={"100%"} mt={3} type="submit" isLoading={loading} loadingText="Loading..">
                 Submit
               </Button>
 
@@ -71,5 +54,17 @@ function ProjectForm() {
     </Box>
   );
 }
+
+ProjectForm.propTypes = {
+  loading: PropTypes.bool,
+  handleSubmit: PropTypes.func.isRequired,
+
+  initialValues: PropTypes.shape({
+    name: PropTypes.string,
+    client: PropTypes.string,
+    status: PropTypes.string,
+    description: PropTypes.string,
+  }).isRequired,
+};
 
 export default ProjectForm;
