@@ -10,7 +10,7 @@ import ProjectCreateContainer from "./create";
 import ProjectItem from "./item";
 
 function Projects() {
-  const [selectedProjects, setSelectedProjects] = useState([]);
+  const [selectedProjects, setSelectedProjects] = useState({});
   const { data, loading, error, refetch } = useQuery(GET_PROJECTS);
 
   function refreshList() {
@@ -19,13 +19,13 @@ function Projects() {
 
   function handleProjectSelection(project) {
     setSelectedProjects((prevSelected) => {
-      const existing = prevSelected.find((p) => p.id === project.id);
+      const existing = prevSelected[project.id];
 
-      if (!existing) {
-        return [...prevSelected, project];
-      }
+      return {
+        ...prevSelected,
 
-      return prevSelected.filter((p) => p.id !== project.id);
+        [project.id]: existing ? null : project,
+      };
     });
   }
 

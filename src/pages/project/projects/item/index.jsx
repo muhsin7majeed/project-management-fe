@@ -4,6 +4,7 @@ import { AtSignIcon, InfoOutlineIcon } from "@chakra-ui/icons";
 import { Box, Button, Checkbox, Flex, Link, Stat, StatLabel, StatNumber, useColorModeValue } from "@chakra-ui/react";
 
 import { ProjectPropType } from "Types/Project";
+import { stopPropagation } from "helpers/utils";
 import ProjectStatus from "components/badges/ProjectStatus";
 import ProjectDeleteContainer from "pages/project/projects/actions/delete";
 
@@ -17,7 +18,7 @@ function ProjectItem({ project, onProjectDeletion, handleProjectSelection, selec
   }
 
   function isProjectSelected() {
-    const existing = selectedProjects.find((p) => p.id === project.id);
+    const existing = selectedProjects[project.id];
 
     return Boolean(existing);
   }
@@ -55,7 +56,7 @@ function ProjectItem({ project, onProjectDeletion, handleProjectSelection, selec
           </StatNumber>
         </Box>
 
-        <Box color={buttonContainerColorMode} flexGrow={1}>
+        <Box color={buttonContainerColorMode} flexGrow={1} onClick={stopPropagation}>
           <Link
             as={RouterLink}
             to={`/project/${project.id}`}
@@ -79,7 +80,9 @@ ProjectItem.propTypes = {
   project: ProjectPropType.isRequired,
   onProjectDeletion: PropTypes.func,
   handleProjectSelection: PropTypes.func,
-  selectedProjects: PropTypes.arrayOf(ProjectPropType),
+  selectedProjects: PropTypes.shape({
+    [PropTypes.string]: ProjectPropType,
+  }),
 };
 
 export default ProjectItem;
