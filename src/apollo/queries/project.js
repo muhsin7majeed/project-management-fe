@@ -37,15 +37,6 @@ export const CREATE_PROJECT = gql`
   mutation createProject($client: String!, $name: String!, $status: String!, $description: String) {
     createProject(clientId: $client, name: $name, status: $status, description: $description) {
       id
-      clientId
-      name
-      status
-      description
-      client {
-        id
-        name
-        email
-      }
     }
   }
 `;
@@ -56,6 +47,14 @@ export const GET_CLIENTS = gql`
       id
       name
       email
+    }
+  }
+`;
+
+export const DELETE_PROJECT = gql`
+  mutation deleteProject($id: ID!) {
+    deleteProject(id: $id) {
+      id
     }
   }
 `;
