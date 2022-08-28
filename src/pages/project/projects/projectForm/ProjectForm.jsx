@@ -4,8 +4,8 @@ import { Box, Button, FormControl, FormLabel, Input, Text, Textarea } from "@cha
 
 import FieldErrorMessage from "components/FieldErrorMessage";
 import { PROJECT_SCHEMA } from "./projectForm.yup";
-import SelectStatus from "../create/SelectStatus";
-import SelectClient from "../create/SelectClient";
+import SelectStatus from "./SelectStatus";
+import SelectClient from "./SelectClient";
 
 function ProjectForm({ initialValues, handleSubmit, loading }) {
   return (
