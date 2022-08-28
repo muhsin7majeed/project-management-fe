@@ -13,9 +13,8 @@ import ProjectForm from "../projectForm/ProjectForm";
 function ProjectCreateContainer({ onProjectCreation }) {
   const { toast } = useToast();
 
-  const [createProject, { loading }] = useMutation(CREATE_PROJECT);
-
   const [isCreateOpen, setIsCreateOpen] = useState(false);
+  const [createProject, { loading }] = useMutation(CREATE_PROJECT);
 
   function toggleCreateProject() {
     setIsCreateOpen((prev) => !prev);
@@ -29,7 +28,7 @@ function ProjectCreateContainer({ onProjectCreation }) {
           status: "success",
         });
 
-        onProjectCreation(data.createProject);
+        if (onProjectCreation) onProjectCreation(data.createProject);
         toggleCreateProject();
       })
       .catch((err) => {
@@ -53,8 +52,8 @@ function ProjectCreateContainer({ onProjectCreation }) {
         <ProjectForm initialValues={initialValues} handleSubmit={handleSubmit} loading={loading} />
       </CommonModal>
 
-      <Button onClick={toggleCreateProject}>
-        Create <AddIcon ml={2} />
+      <Button onClick={toggleCreateProject} rightIcon={<AddIcon />}>
+        Create
       </Button>
     </>
   );

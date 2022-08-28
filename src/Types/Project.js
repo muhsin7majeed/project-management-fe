@@ -7,4 +7,4 @@ export const ProjectPropType = shape({
   id: string,
   name: string,
   status: ProjectStatusType,
-}).isRequired;
+});

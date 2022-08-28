@@ -1,11 +1,12 @@
-import { Link } from "react-router-dom";
-import { AtSignIcon } from "@chakra-ui/icons";
-import { Box, Button, Flex, Stat, StatLabel, StatNumber, useColorModeValue } from "@chakra-ui/react";
+import { Link as RouterLink } from "react-router-dom";
+import { AtSignIcon, InfoOutlineIcon } from "@chakra-ui/icons";
+import { Box, Button, Flex, Link, Stat, StatLabel, StatNumber, useColorModeValue } from "@chakra-ui/react";
 
 import { ProjectPropType } from "Types/Project";
 import ProjectStatus from "components/badges/ProjectStatus";
+import ProjectDeleteContainer from "pages/project/projects/actions/delete";
 
-function ProjectItem({ project }) {
+function ProjectItem({ project, onProjectDeletion }) {
   const containerColorMode = useColorModeValue("gray.800", "gray.500");
   const buttonContainerColorMode = useColorModeValue("gray.800", "gray.200");
 
@@ -35,16 +36,20 @@ function ProjectItem({ project }) {
           </StatNumber>
         </Box>
 
-        <Box my={"auto"} color={buttonContainerColorMode} alignContent={"center"}>
-          <Link to={`/project/${project.id}`}>
-            <Button>View</Button>
+        <Box my={"auto"} color={buttonContainerColorMode} display="flex" flexDirection="column" alignItems="center">
+          <Link as={RouterLink} to={`/project/${project.id}`} style={{ textDecoration: "none" }} width="100%">
+            <Button colorScheme="teal" rightIcon={<InfoOutlineIcon />} width="100%" variant="outline">
+              View
+            </Button>
           </Link>
+
+          <ProjectDeleteContainer project={project} onProjectDeletion={onProjectDeletion} />
         </Box>
       </Flex>
     </Stat>
   );
 }
 
-ProjectItem.propTypes = ProjectPropType;
+ProjectItem.propTypes = ProjectPropType.isRequired;
 
 export default ProjectItem;

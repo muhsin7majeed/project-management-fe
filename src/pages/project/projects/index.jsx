@@ -11,7 +11,7 @@ import ProjectItem from "./item";
 function Projects() {
   const { data, loading, error, refetch } = useQuery(GET_PROJECTS);
 
-  function onProjectCreation() {
+  function refreshList() {
     refetch();
   }
 
@@ -23,7 +23,7 @@ function Projects() {
             Projects
           </Heading>
 
-          <ProjectCreateContainer onProjectCreation={onProjectCreation} />
+          <ProjectCreateContainer onProjectCreation={refreshList} />
         </Box>
 
         {loading && <DefaultSpinner />}
@@ -35,7 +35,7 @@ function Projects() {
         {Boolean(data?.projects?.length) && (
           <SimpleGrid columns={{ base: 1, md: 3 }} spacing={{ base: 5, lg: 8 }}>
             {data.projects.map((project) => (
-              <ProjectItem key={project.id} project={project} />
+              <ProjectItem key={project.id} project={project} onProjectDeletion={refreshList} />
             ))}
           </SimpleGrid>
         )}
