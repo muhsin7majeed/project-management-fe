@@ -1,6 +1,6 @@
 import Projects from "pages/project/projects/index";
 
-function Landing() {
+function ProjectLanding() {
   return (
     <>
       <Projects />
@@ -8,4 +8,4 @@ function Landing() {
   );
 }
 
-export default Landing;
+export default ProjectLanding;

@@ -1,8 +1,9 @@
 import PropTypes from "prop-types";
-import { Box, Select, Text } from "@chakra-ui/react";
 import { useQuery } from "@apollo/client";
-import { GET_CLIENTS } from "pages/client/queries";
+import { Box, Select, Text } from "@chakra-ui/react";
+
 import DefaultSpinner from "components/loaders/DefaultSpinner";
+import { GET_CLIENTS } from "apollo/queries/project";
 
 function Wrapper({ children }) {
   return (

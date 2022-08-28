@@ -17,7 +17,7 @@ import {
 
 const LINKS = [
   { id: 1, name: "Projects", linkTo: "/projects" },
-  { id: 2, name: "Clients", linkTo: "/clients" },
+  { id: 2, name: "About", linkTo: "/about" },
 ];
 
 function Navbar() {
