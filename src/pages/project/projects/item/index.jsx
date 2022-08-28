@@ -1,7 +1,9 @@
 import { Link } from "react-router-dom";
+import { AtSignIcon } from "@chakra-ui/icons";
 import { Box, Button, Flex, Stat, StatLabel, StatNumber, useColorModeValue } from "@chakra-ui/react";
 
 import { ProjectPropType } from "Types/Project";
+import ProjectStatus from "components/badges/ProjectStatus";
 
 function ProjectItem({ project }) {
   const containerColorMode = useColorModeValue("gray.800", "gray.500");
@@ -19,7 +21,14 @@ function ProjectItem({ project }) {
     >
       <Flex justifyContent={"space-between"}>
         <Box pl={{ base: 2, md: 4 }}>
-          <StatLabel fontWeight={"medium"}>{project.status}</StatLabel>
+          <Box mb={3} mt={-3}>
+            <ProjectStatus status={project.status} />
+          </Box>
+
+          <StatLabel fontWeight={"medium"}>
+            <AtSignIcon mr={1} />
+            {project.client?.name}
+          </StatLabel>
 
           <StatNumber fontSize={"2xl"} fontWeight={"medium"}>
             {project.name}
