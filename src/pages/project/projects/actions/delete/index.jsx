@@ -49,7 +49,7 @@ function ProjectDeleteContainer({ project, onProjectDeletion }) {
         onConfirm={handleDeleteProject}
       />
 
-      <Button mt={2} colorScheme="red" rightIcon={<DeleteIcon />} onClick={toggleDeleteProject}>
+      <Button mt={2} colorScheme="red" rightIcon={<DeleteIcon />} onClick={toggleDeleteProject} width="100%">
         Delete
       </Button>
     </>

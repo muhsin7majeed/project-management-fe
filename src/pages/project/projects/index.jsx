@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useQuery } from "@apollo/client";
 import { Box, Center, Heading, SimpleGrid } from "@chakra-ui/react";
 
@@ -9,10 +10,23 @@ import ProjectCreateContainer from "./create";
 import ProjectItem from "./item";
 
 function Projects() {
+  const [selectedProjects, setSelectedProjects] = useState([]);
   const { data, loading, error, refetch } = useQuery(GET_PROJECTS);
 
   function refreshList() {
     refetch();
+  }
+
+  function handleProjectSelection(project) {
+    setSelectedProjects((prevSelected) => {
+      const existing = prevSelected.find((p) => p.id === project.id);
+
+      if (!existing) {
+        return [...prevSelected, project];
+      }
+
+      return prevSelected.filter((p) => p.id !== project.id);
+    });
   }
 
   return (
@@ -35,7 +49,13 @@ function Projects() {
         {Boolean(data?.projects?.length) && (
           <SimpleGrid columns={{ base: 1, md: 3 }} spacing={{ base: 5, lg: 8 }}>
             {data.projects.map((project) => (
-              <ProjectItem key={project.id} project={project} onProjectDeletion={refreshList} />
+              <ProjectItem
+                key={project.id}
+                project={project}
+                onProjectDeletion={refreshList}
+                handleProjectSelection={handleProjectSelection}
+                selectedProjects={selectedProjects}
+              />
             ))}
           </SimpleGrid>
         )}

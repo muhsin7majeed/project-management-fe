@@ -1,14 +1,26 @@
+import PropTypes from "prop-types";
 import { Link as RouterLink } from "react-router-dom";
 import { AtSignIcon, InfoOutlineIcon } from "@chakra-ui/icons";
-import { Box, Button, Flex, Link, Stat, StatLabel, StatNumber, useColorModeValue } from "@chakra-ui/react";
+import { Box, Button, Checkbox, Flex, Link, Stat, StatLabel, StatNumber, useColorModeValue } from "@chakra-ui/react";
 
 import { ProjectPropType } from "Types/Project";
 import ProjectStatus from "components/badges/ProjectStatus";
 import ProjectDeleteContainer from "pages/project/projects/actions/delete";
 
-function ProjectItem({ project, onProjectDeletion }) {
+function ProjectItem({ project, onProjectDeletion, handleProjectSelection, selectedProjects }) {
   const containerColorMode = useColorModeValue("gray.800", "gray.500");
+  const containerBGColorMode = useColorModeValue("gray.200", "gray.500");
   const buttonContainerColorMode = useColorModeValue("gray.800", "gray.200");
+
+  function onProjectSelection() {
+    handleProjectSelection(project);
+  }
+
+  function isProjectSelected() {
+    const existing = selectedProjects.find((p) => p.id === project.id);
+
+    return Boolean(existing);
+  }
 
   return (
     <Stat
@@ -19,9 +31,16 @@ function ProjectItem({ project, onProjectDeletion }) {
       border={"1px solid"}
       borderColor={containerColorMode}
       rounded={"lg"}
+      onClick={onProjectSelection}
+      bgColor={isProjectSelected() ? containerBGColorMode : ""}
+      cursor="pointer"
     >
       <Flex justifyContent={"space-between"}>
-        <Box pl={{ base: 2, md: 4 }}>
+        <Box flexGrow={1}>
+          <Checkbox isChecked={isProjectSelected()} onChange={onProjectSelection} />
+        </Box>
+
+        <Box pl={{ base: 2, md: 4 }} flexGrow={4}>
           <Box mb={3} mt={-3}>
             <ProjectStatus status={project.status} />
           </Box>
@@ -36,9 +55,15 @@ function ProjectItem({ project, onProjectDeletion }) {
           </StatNumber>
         </Box>
 
-        <Box my={"auto"} color={buttonContainerColorMode} display="flex" flexDirection="column" alignItems="center">
-          <Link as={RouterLink} to={`/project/${project.id}`} style={{ textDecoration: "none" }} width="100%">
-            <Button colorScheme="teal" rightIcon={<InfoOutlineIcon />} width="100%" variant="outline">
+        <Box color={buttonContainerColorMode} flexGrow={1}>
+          <Link
+            as={RouterLink}
+            to={`/project/${project.id}`}
+            style={{ textDecoration: "none" }}
+            display="block"
+            width="100%"
+          >
+            <Button colorScheme="teal" rightIcon={<InfoOutlineIcon />} variant="outline" width="100%">
               View
             </Button>
           </Link>
@@ -50,6 +75,11 @@ function ProjectItem({ project, onProjectDeletion }) {
   );
 }
 
-ProjectItem.propTypes = ProjectPropType.isRequired;
+ProjectItem.propTypes = {
+  project: ProjectPropType.isRequired,
+  onProjectDeletion: PropTypes.func,
+  handleProjectSelection: PropTypes.func,
+  selectedProjects: PropTypes.arrayOf(ProjectPropType),
+};
 
 export default ProjectItem;
