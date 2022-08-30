@@ -3,14 +3,19 @@ import PropTypes from "prop-types";
 import { Box, Button, FormControl, FormLabel, Input, Text, Textarea } from "@chakra-ui/react";
 
 import FieldErrorMessage from "components/FieldErrorMessage";
-import { PROJECT_SCHEMA } from "./projectForm.yup";
+import { GET_PROJECT_SCHEMA } from "./projectForm.yup";
 import SelectStatus from "./SelectStatus";
 import SelectClient from "./SelectClient";
+import { PROJECT_FORM_SOURCE_EDIT } from "./constants";
 
-function ProjectForm({ initialValues, handleSubmit, loading }) {
+function ProjectForm({ initialValues, handleSubmit, loading, source }) {
+  function getValidationSchema() {
+    return GET_PROJECT_SCHEMA(source);
+  }
+
   return (
     <Box>
-      <Formik onSubmit={handleSubmit} initialValues={initialValues} validationSchema={PROJECT_SCHEMA}>
+      <Formik onSubmit={handleSubmit} initialValues={initialValues} validationSchema={getValidationSchema}>
         {({ values, errors, handleSubmit, handleReset, setFieldValue }) => {
           return (
             <form onSubmit={handleSubmit}>
@@ -28,12 +33,17 @@ function ProjectForm({ initialValues, handleSubmit, loading }) {
                 <FieldErrorMessage name="status" />
               </FormControl>
 
-              <FormControl mb={3} isInvalid={errors.client}>
-                <FormLabel>Owner *</FormLabel>
+              {source !== PROJECT_FORM_SOURCE_EDIT && (
+                <FormControl mb={3} isInvalid={errors.client}>
+                  <FormLabel>Owner *</FormLabel>
 
-                <SelectClient value={values.client} onChange={({ target }) => setFieldValue("client", target.value)} />
-                <FieldErrorMessage name="client" />
-              </FormControl>
+                  <SelectClient
+                    value={values.client}
+                    onChange={({ target }) => setFieldValue("client", target.value)}
+                  />
+                  <FieldErrorMessage name="client" />
+                </FormControl>
+              )}
 
               <FormControl mb={3}>
                 <FormLabel>Description</FormLabel>
@@ -58,6 +68,7 @@ function ProjectForm({ initialValues, handleSubmit, loading }) {
 ProjectForm.propTypes = {
   loading: PropTypes.bool,
   handleSubmit: PropTypes.func.isRequired,
+  source: PropTypes.oneOf([PROJECT_FORM_SOURCE_EDIT]),
 
   initialValues: PropTypes.shape({
     name: PropTypes.string,
