@@ -1,7 +1,7 @@
 import { Badge } from "@chakra-ui/react";
 
-import { ProjectStatusType } from "Types/Project";
 import { PROJECT_STATUS_MAP } from "helpers/constants/project";
+import { ProjectStatusType } from "types";
 
 const VARIANT_MAP = {
   [PROJECT_STATUS_MAP.IN_PROGRESS]: "purple",

@@ -5,7 +5,7 @@ import { Box } from "@chakra-ui/react";
 
 import useToast from "hooks/useToast";
 import ConfirmModal from "components/modals/ConfirmModal";
-import { ProjectPropType } from "Types/Project";
+import { ProjectPropType } from "types";
 import { DELETE_PROJECTS } from "apollo/queries/project";
 
 function ProjectDeleteContainer({ projects, onProjectDeletion, children }) {

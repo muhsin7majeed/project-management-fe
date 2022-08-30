@@ -3,7 +3,7 @@ import { Link as RouterLink } from "react-router-dom";
 import { AtSignIcon, DeleteIcon, InfoOutlineIcon } from "@chakra-ui/icons";
 import { Box, Button, Checkbox, Flex, Link, Stat, StatLabel, StatNumber, useColorModeValue } from "@chakra-ui/react";
 
-import { ProjectPropType } from "Types/Project";
+import { ProjectPropType } from "types";
 import { stopPropagation } from "helpers/utils";
 import ProjectStatus from "components/badges/ProjectStatus";
 import ProjectDeleteContainer from "pages/project/projects/actions/delete";

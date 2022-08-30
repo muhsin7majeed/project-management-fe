@@ -1,7 +1,7 @@
 import { AtSignIcon, EmailIcon } from "@chakra-ui/icons";
 import { Box, List, ListItem, Text, useColorModeValue } from "@chakra-ui/react";
 
-import { ClientPropType } from "Types";
+import { ClientPropType } from "types";
 
 function ClientInfo({ client }) {
   return (
