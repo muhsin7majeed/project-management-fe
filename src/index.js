@@ -7,12 +7,12 @@ import { ApolloProvider } from "@apollo/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { client } from "config/apollo";
+import { APOLLO_CLIENT } from "apollo/config";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <ApolloProvider client={client}>
+    <ApolloProvider client={APOLLO_CLIENT}>
       <BrowserRouter>
         <ChakraProvider>
           <App />
