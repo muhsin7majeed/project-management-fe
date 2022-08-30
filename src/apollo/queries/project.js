@@ -51,10 +51,10 @@ export const GET_CLIENTS = gql`
   }
 `;
 
-export const DELETE_PROJECT = gql`
-  mutation deleteProject($id: ID!) {
-    deleteProject(id: $id) {
-      id
+export const DELETE_PROJECTS = gql`
+  mutation deleteProjects($ids: [ID!]) {
+    deleteProjects(ids: $ids) {
+      ids
     }
   }
 `;

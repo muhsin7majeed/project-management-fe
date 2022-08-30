@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { Link as RouterLink } from "react-router-dom";
-import { AtSignIcon, InfoOutlineIcon } from "@chakra-ui/icons";
+import { AtSignIcon, DeleteIcon, InfoOutlineIcon } from "@chakra-ui/icons";
 import { Box, Button, Checkbox, Flex, Link, Stat, StatLabel, StatNumber, useColorModeValue } from "@chakra-ui/react";
 
 import { ProjectPropType } from "Types/Project";
@@ -69,7 +69,11 @@ function ProjectItem({ project, onProjectDeletion, handleProjectSelection, selec
             </Button>
           </Link>
 
-          <ProjectDeleteContainer project={project} onProjectDeletion={onProjectDeletion} />
+          <ProjectDeleteContainer projects={[project]} onProjectDeletion={onProjectDeletion}>
+            <Button mt={2} width="100%" colorScheme="red" rightIcon={<DeleteIcon />}>
+              Delete
+            </Button>
+          </ProjectDeleteContainer>
         </Box>
       </Flex>
     </Stat>

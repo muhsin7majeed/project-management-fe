@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useQuery } from "@apollo/client";
-import { Box, Center, Heading, SimpleGrid } from "@chakra-ui/react";
+import { DeleteIcon } from "@chakra-ui/icons";
+import { Box, Button, Center, Heading, SimpleGrid } from "@chakra-ui/react";
 
 import { GET_PROJECTS } from "apollo/queries/project";
 import DefaultSpinner from "components/loaders/DefaultSpinner";
@@ -8,6 +9,8 @@ import SomethingWentWrong from "components/SomethingWentWrong";
 
 import ProjectCreateContainer from "./create";
 import ProjectItem from "./item";
+import ProjectDeleteContainer from "./actions/delete";
+import { flattenSelectedProjects } from "./utils";
 
 function Projects() {
   const [selectedProjects, setSelectedProjects] = useState({});
@@ -37,7 +40,18 @@ function Projects() {
             Projects
           </Heading>
 
-          <ProjectCreateContainer onProjectCreation={refreshList} />
+          <Box display="flex">
+            <ProjectDeleteContainer
+              projects={flattenSelectedProjects(selectedProjects)}
+              onProjectDeletion={refreshList}
+            >
+              <Button mr={2} colorScheme="red" rightIcon={<DeleteIcon />}>
+                Delete
+              </Button>
+            </ProjectDeleteContainer>
+
+            <ProjectCreateContainer onProjectCreation={refreshList} />
+          </Box>
         </Box>
 
         {loading && <DefaultSpinner />}

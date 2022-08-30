@@ -1,29 +1,36 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
 import { useMutation } from "@apollo/client";
-import { DeleteIcon } from "@chakra-ui/icons";
-import { Button } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 
 import useToast from "hooks/useToast";
 import ConfirmModal from "components/modals/ConfirmModal";
 import { ProjectPropType } from "Types/Project";
-import { DELETE_PROJECT } from "apollo/queries/project";
+import { DELETE_PROJECTS } from "apollo/queries/project";
 
-function ProjectDeleteContainer({ project, onProjectDeletion }) {
+function ProjectDeleteContainer({ projects, onProjectDeletion, children }) {
   const { toast } = useToast();
 
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
-  const [deleteProject, { loading }] = useMutation(DELETE_PROJECT);
+  const [deleteProject, { loading }] = useMutation(DELETE_PROJECTS);
 
   function toggleDeleteProject() {
+    if (projects.length === 0) {
+      return toast({ title: "Please select at least one project to delete!", status: "warning" });
+    }
+
     setIsDeleteOpen((prev) => !prev);
   }
 
   function handleDeleteProject() {
-    deleteProject({ variables: { id: project.id } })
+    deleteProject({
+      variables: {
+        ids: projects.map((project) => project.id),
+      },
+    })
       .then(() => {
         toast({
-          title: `${project.name} Deleted Successfully!`,
+          title: `Successfully Deleted ${projects.length} Projects!`,
           status: "success",
         });
 
@@ -44,22 +51,21 @@ function ProjectDeleteContainer({ project, onProjectDeletion }) {
         isOpen={isDeleteOpen}
         isLoading={loading}
         variant="danger"
-        description={`Are you sure you want to delete ${project.name} permanantly?`}
+        description={`Are you sure you want to delete ${projects.length} Projects permanantly?`}
         onClose={toggleDeleteProject}
         onConfirm={handleDeleteProject}
       />
 
-      <Button mt={2} colorScheme="red" rightIcon={<DeleteIcon />} onClick={toggleDeleteProject} width="100%">
-        Delete
-      </Button>
+      <Box onClick={toggleDeleteProject}>{children}</Box>
     </>
   );
 }
 
 ProjectDeleteContainer.propTypes = {
   title: PropTypes.string,
-  project: ProjectPropType.isRequired,
+  projects: PropTypes.arrayOf(ProjectPropType).isRequired,
   onProjectDeletion: PropTypes.func,
+  children: PropTypes.node.isRequired,
 };
 
 export default ProjectDeleteContainer;
