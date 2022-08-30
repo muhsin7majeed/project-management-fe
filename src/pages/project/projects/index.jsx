@@ -17,6 +17,7 @@ function Projects() {
   const { data, loading, error, refetch } = useQuery(GET_PROJECTS);
 
   function refreshList() {
+    setSelectedProjects({});
     refetch();
   }
 
@@ -45,7 +46,12 @@ function Projects() {
               projects={flattenSelectedProjects(selectedProjects)}
               onProjectDeletion={refreshList}
             >
-              <Button mr={2} colorScheme="red" rightIcon={<DeleteIcon />}>
+              <Button
+                mr={2}
+                colorScheme="red"
+                rightIcon={<DeleteIcon />}
+                disabled={!flattenSelectedProjects(selectedProjects).length}
+              >
                 Delete
               </Button>
             </ProjectDeleteContainer>
