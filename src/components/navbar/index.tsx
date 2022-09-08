@@ -1,15 +1,12 @@
 import React from "react";
 import { NavLink, Link as RouterLink } from "react-router-dom";
-import { CalendarIcon, CloseIcon, HamburgerIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
+import { CalendarIcon, CloseIcon, HamburgerIcon } from "@chakra-ui/icons";
 import {
   Box,
-  Button,
   Flex,
   HStack,
   IconButton,
   Stack,
-  Tooltip,
-  useColorMode,
   useColorModeValue,
   useDisclosure,
   Link,
@@ -18,6 +15,7 @@ import {
 
 import { NavLinkItem } from "types/common";
 import { ROUTE_PATHS } from "helpers/constants";
+import DarkModeToggle from "components/DarkModeToggle";
 
 const LINKS: NavLinkItem[] = [
   { id: 1, name: "Projects", linkTo: ROUTE_PATHS.PROJECTS },
@@ -25,7 +23,6 @@ const LINKS: NavLinkItem[] = [
 ];
 
 function Navbar() {
-  const { colorMode, toggleColorMode } = useColorMode();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
@@ -62,9 +59,7 @@ function Navbar() {
           </HStack>
 
           <Flex alignItems={"center"}>
-            <Tooltip label="Toggle Dark Mode" openDelay={200}>
-              <Button onClick={toggleColorMode}>{colorMode === "light" ? <MoonIcon /> : <SunIcon />}</Button>
-            </Tooltip>
+            <DarkModeToggle />
 
             <IconButton
               size={"md"}
