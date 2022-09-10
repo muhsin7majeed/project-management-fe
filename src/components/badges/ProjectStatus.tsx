@@ -16,7 +16,11 @@ interface PropTypes {
 }
 
 function ProjectStatus({ status }: PropTypes) {
-  return <Badge colorScheme={VARIANT_MAP[status]}>{status}</Badge>;
+  return (
+    <Badge data-testid={VARIANT_MAP[status]} colorScheme={VARIANT_MAP[status]}>
+      {status}
+    </Badge>
+  );
 }
 
 export default ProjectStatus;
